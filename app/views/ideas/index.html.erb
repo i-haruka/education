@@ -1,0 +1,16 @@
+<h1>投稿一覧</h1>
+<% @ideas.each do |idea| %>
+
+  <p>テーマ</p>
+  <span>
+    <%=link_to idea.title, idea_path(idea.id) %>
+  </span>
+
+  <p>説明</p>
+  　<span>
+    <%=link_to idea.body, idea_path(idea.id) %>
+  </span>
+
+  <p>画像</p>
+  <%= image_tag idea.image, size: "200x200" %>
+<% end %>
