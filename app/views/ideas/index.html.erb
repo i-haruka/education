@@ -1,6 +1,7 @@
 <h1>投稿一覧</h1>
-<% @ideas.each do |idea| %>
 
+<% @ideas.each do |idea| %>
+<div>
   <p>テーマ</p>
   <span>
     <%=link_to idea.title, idea_path(idea.id) %>
@@ -12,5 +13,10 @@
   </span>
 
   <p>画像</p>
-  <%= image_tag idea.image, size: "200x200" %>
+  <%= image_tag idea.user.get_profile_image(100,100) %>
+
+  <%= link_to idea_path(idea.id) do %>
+    <%= image_tag idea.get_image %>
+  <% end %>
+  </div>
 <% end %>

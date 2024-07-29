@@ -11,19 +11,32 @@ class IdeasController < ApplicationController
   end
 
   def index
-    @ideas = Idea.all
+    @ideas = Idea.page(params[:page])
   end
 
   def show
     @idea = Idea.find(params[:id])
   end
 
-  def edit
+  def destroy
+    idea = Idea.find(params[:id])
+    idea.delete
+    redirect_to ideas_path
   end
 
+  def edit
+    @idea = Idea.find(params[:id])
+  end
+
+  def update
+    idea = Idea.find(params[:id])
+    idea.update(idea_params)
+    redirect_to idea_path(idea.id)
+  end
+  
   private
 
   def idea_params
-    params.require(:idea).permit(:title, :image, :caption)
+    params.require(:idea).permit(:title, :body, :image)
   end
 end

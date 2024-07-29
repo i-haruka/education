@@ -1,2 +1,11 @@
-<h1>Ideas#show</h1>
-<p>Find me in app/views/ideas/show.html.erb</p>
+<div>
+  <%= image_tag @idea.get_image %>
+  <p>テーマ：<%= @idea.title %></p>
+  <p>説明：<%= @idea.body %></p>
+  <p>投稿ユーザー画像：<%= image_tag @idea.user.get_profile_image(100,100) %></p>
+  <p>ユーザーネーム：<%= @idea.user.name %></p>
+  <p>投稿日：<%= @idea.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @idea.user == current_user %>
+    <%= link_to "削除", idea_path(@idea), method: :delete %>
+  <% end %>
+</div>
