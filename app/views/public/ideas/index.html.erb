@@ -18,5 +18,7 @@
   <%= link_to idea_path(idea.id) do %>
     <%= image_tag idea.get_image %>
   <% end %>
+
+  <p><%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></p>
   </div>
 <% end %>

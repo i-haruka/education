@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class Public::IdeasController < ApplicationController
   def new
     @idea = Idea.new
   end
@@ -16,6 +16,7 @@ class IdeasController < ApplicationController
 
   def show
     @idea = Idea.find(params[:id])
+    @idea_comment = IdeaComment.new
   end
 
   def destroy
@@ -33,7 +34,10 @@ class IdeasController < ApplicationController
     idea.update(idea_params)
     redirect_to idea_path(idea.id)
   end
-  
+
+  def search
+  end
+
   private
 
   def idea_params

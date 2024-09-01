@@ -17,5 +17,6 @@
     <%= image_tag idea.get_image %>
   <% end %>
   <p>ユーザーネーム：<%= idea.user.name %></p>
+  <p><%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></p>
 </div>
 <% end %>

@@ -1,0 +1,30 @@
+<div>
+  <%= image_tag @idea.get_image %>
+  <p>テーマ：<%= @idea.title %></p>
+  <p>説明：<%= @idea.body %></p>
+  <p>投稿ユーザー画像：<%= image_tag @idea.user.get_profile_image(100,100) %></p>
+  <p>ユーザーネーム：<%= @idea.user.name %></p>
+  <p>投稿日：<%= @idea.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @idea.user == current_user %>
+    <%= link_to "削除", idea_path(@idea), method: :delete %>
+  <% end %>
+</div>
+
+<div>
+  <p>コメント件数：<%= @idea.idea_comments.count %></p>
+  <% @idea.idea_comments.each do |idea_comment| %>
+    <p><%= image_tag idea_comment.user.get_profile_image(100,100) %></p>
+    <%= idea_comment.user.name %>
+    <%= idea_comment.created_at.strftime('%Y/%m/%d') %><%= idea_comment.comment %>
+    <% if idea_comment.user == current_user %>
+      <%= button_to "削除", idea_idea_comment_path(idea_comment.idea, idea_comment), method: :delete %>
+    <% end %>
+  <% end %>
+</div>
+
+<div>
+  <%= form_with model: [@idea, @idea_comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
