@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 # get 'home/about', to: 'homes#about', as: :about
 
 patch 'ideas/:id' => 'ideas#update', as: 'update_idea'
-get "search" => "searches#search"
+get "search" => "public/searches#search"
 resources :ideas, only: [:new, :create, :index, :show ,:edit, :destroy, :update]do
     resources :idea_comments, only: [:create, :destroy]
 end
