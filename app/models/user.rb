@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :ideas, dependent: :destroy
   has_many :idea_comments, dependent: :destroy
   has_one_attached :profile_image
+  has_many :favorites, dependent: :destroy
 
   def get_profile_image(width, height)
    unless profile_image.attached?
@@ -22,8 +23,9 @@ class User < ApplicationRecord
     find_or_create_by(email: GUEST_USER_EMAIL) do |user|
       user.password = SecureRandom.urlsafe_base64
       user.name = "guestuser"
+    end
   end
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @user = User.where("name LIKE?", "#{word}")
@@ -36,6 +38,5 @@ class User < ApplicationRecord
     else
       @user = User.all
     end
-  end
   end
 end

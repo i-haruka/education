@@ -15,11 +15,12 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'homes/about', to: 'homes#about', as: :about
-      resources :ideas, only: [:new, :create, :index, :show, :destroy] do
+      resources :ideas, only: [:new, :create, :index, :show, :destroy, :edit ,:update] do
       resource :favorites, only: [:create, :destroy]
       resources :idea_comments, only: [:create, :destroy]
+
     end
-    resources :users, only: [:show, :edit, :update]
+     resources :users, only: [:show, :edit, :update]
   end
 
 # root to: "homes#top"
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
 patch 'ideas/:id' => 'ideas#update', as: 'update_idea'
 get "search" => "public/searches#search"
 resources :ideas, only: [:new, :create, :index, :show ,:edit, :destroy, :update]do
+    resource :favorite, only: [:create, :destroy]
     resources :idea_comments, only: [:create, :destroy]
 end
 resources :users, only: [:show, :edit, :update]

@@ -6,7 +6,22 @@
   <p>ユーザーネーム：<%= @idea.user.name %></p>
   <p>投稿日：<%= @idea.created_at.strftime('%Y/%m/%d') %></p>
   <% if @idea.user == current_user %>
-    <%= link_to "削除", idea_path(@idea), method: :delete %>
+    <%= button_to "削除", idea_path(@idea), method: :delete %>
+    <%= link_to "編集", edit_idea_path %>
+  <% end %>
+
+  <% if @idea.favorited_by?(current_user) %>
+    <p>
+      <%= button_to idea_favorite_path(@idea), method: :delete do %>
+        ♥<%= @idea.favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= button_to idea_favorite_path(@idea), method: :post do %>
+        ♡<%= @idea.favorites.count %> いいね
+      <% end %>
+    </p>
   <% end %>
 </div>
 
