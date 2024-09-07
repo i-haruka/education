@@ -1,0 +1,9 @@
+<h1>コメント一覧</h1>
+<ul>
+  <% @idea.each do |idea| %>
+    <li>
+      <%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></p>
+      <%= button_to '削除', admin_idea_path(idea), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    </li>
+  <% end %>
+</ul>

@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
+   root to: 'homes#top'
    get 'dashboards', to: 'dashboards#index'
-   resources :users, only: [:destroy]
+   resources :users, only: [:index, :destroy]
+   get 'ideas', to: 'ideas#index'
+   resources :ideas, only: [:index, :destroy]
   end
 
   devise_for :users, controllers: {
@@ -20,9 +23,10 @@ Rails.application.routes.draw do
       resources :idea_comments, only: [:create, :destroy]
 
     end
-     resources :users, only: [:show, :edit, :update]
+     resources :users, only: [:show, :edit, :update ,:index]
   end
 
+     resources :groups, only: [:new, :create, :index, :show, :destroy, :edit ,:update]
 # root to: "homes#top"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -34,7 +38,7 @@ resources :ideas, only: [:new, :create, :index, :show ,:edit, :destroy, :update]
     resource :favorite, only: [:create, :destroy]
     resources :idea_comments, only: [:create, :destroy]
 end
-resources :users, only: [:show, :edit, :update]
+resources :users, only: [:show, :edit, :update, :index]
 
 devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'

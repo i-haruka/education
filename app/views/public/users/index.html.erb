@@ -1,0 +1,19 @@
+<h1>ユーザー一覧</h1>
+
+<% @users.each do |user| %>
+<div>
+  <p>名前</p>
+  <span>
+    <%=link_to user.name, user_path(user.id) %>
+  </span>
+  <p>自己紹介</p>
+  　<span>
+    <%=link_to user.body, user_path(user.id) %>
+  </span>
+  <p>画像</p>
+  <%= image_tag user.get_profile_image(100,100) %>
+
+  <%= link_to idea_path(idea.id) do %>
+    <%= image_tag idea.get_image %>
+  <% end %>
+</div>

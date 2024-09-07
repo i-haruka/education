@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :idea_comments, dependent: :destroy
   has_one_attached :profile_image
   has_many :favorites, dependent: :destroy
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
 
   def get_profile_image(width, height)
    unless profile_image.attached?
@@ -39,4 +41,9 @@ class User < ApplicationRecord
       @user = User.all
     end
   end
+
+  def index
+
+  end
+
 end
