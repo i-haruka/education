@@ -29,6 +29,17 @@
               <%= link_to 'Edit', edit_group_path(group), class: "btn btn-sm btn-success" %>
             </td>
           <% end %>
+          <% unless group.users.include?(current_user) %>
+            <td>
+              <%= form_with url: group_group_users_path(group), local: true do |f| %>
+             　　 <%= f.submit '参加' %>
+              <% end %>
+            </td>
+          <% else %>
+            <td>
+              <%= button_to "退出", group_group_users_path(group), method: :delete %>
+            </td>
+  　　  　　<% end %>
         </tr>
       <% end %>
     </tbody>

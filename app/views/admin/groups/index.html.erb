@@ -1,0 +1,10 @@
+<h1>グループ一覧</h1>
+<ul>
+  <% @groups.each do |user| %>
+    <li>
+      <%= group.name %>
+    </li>
+    <%= button_to '削除', admin_group_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    </li>
+  <% end %>
+</ul>

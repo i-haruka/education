@@ -1,15 +1,15 @@
-class GroupsController < ApplicationController
+class Public::GroupsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def index
-    @idea = Idea.new #アプリの都合上定義しておりますご自身のアプリに合わせて変更して下さい。
+    @idea = Idea.new
     @groups = Group.all
   end
 
   def show
-    @idea = Idea.new #アプリの都合上定義しておりますご自身のアプリに合わせて変更して下さい。
+    @idea = Idea.new
     @group = Group.find(params[:id])
   end
 
@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new
+    @group = Group.new(group_params)
     @group.owner_id = current_user.id
     if @group.save
       redirect_to groups_path
@@ -45,8 +45,6 @@ class GroupsController < ApplicationController
     params.require(:group).permit(:name, :introduction, :image)
   end
 
-  # params[:id]を持つ@groupのowner_idカラムのデータと自分のユーザーIDが一緒かどうかを確かめる。
-  # 違う場合、処理をする。グループ一覧ページへ遷移させる。before_actionで使用する。
   def ensure_correct_user
     @group = Group.find(params[:id])
     unless @group.owner_id == current_user.id

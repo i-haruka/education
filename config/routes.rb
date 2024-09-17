@@ -9,6 +9,8 @@ Rails.application.routes.draw do
    resources :users, only: [:index, :destroy]
    get 'ideas', to: 'ideas#index'
    resources :ideas, only: [:index, :destroy]
+   get 'groups', to: 'groups#index'
+   resources :groups, only: [:index, :destroy]
   end
 
   devise_for :users, controllers: {
@@ -17,23 +19,26 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
+    get "search" => "searches#search"
     get 'homes/about', to: 'homes#about', as: :about
       resources :ideas, only: [:new, :create, :index, :show, :destroy, :edit ,:update] do
-      resource :favorites, only: [:create, :destroy]
-      resources :idea_comments, only: [:create, :destroy]
-
-    end
-     resources :users, only: [:show, :edit, :update ,:index]
+       resource :favorites, only: [:create, :destroy]
+       resources :idea_comments, only: [:create, :destroy]
+      end
+      resources :users, only: [:show, :edit, :update ,:index]
+      resources :groups, only: [:new, :create, :index, :show, :destroy, :edit ,:update] do
+       resource :group_users, only: [:create, :destroy]
+      end
   end
 
-     resources :groups, only: [:new, :create, :index, :show, :destroy, :edit ,:update]
+
 # root to: "homes#top"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 # get 'home/about', to: 'homes#about', as: :about
 
 patch 'ideas/:id' => 'ideas#update', as: 'update_idea'
-get "search" => "public/searches#search"
+
 resources :ideas, only: [:new, :create, :index, :show ,:edit, :destroy, :update]do
     resource :favorite, only: [:create, :destroy]
     resources :idea_comments, only: [:create, :destroy]
