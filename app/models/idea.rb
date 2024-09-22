@@ -3,7 +3,10 @@ class Idea < ApplicationRecord
   has_many :idea_comments, dependent: :destroy
   belongs_to :user
   has_many :favorites, dependent: :destroy
-
+  
+  validates :title, presence: true
+  validates :body, presence: true
+  
   def get_image
     if image.attached?
       image

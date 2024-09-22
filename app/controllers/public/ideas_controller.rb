@@ -6,8 +6,11 @@ class Public::IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     @idea.user_id = current_user.id
-    @idea.save
-    redirect_to ideas_path
+    if @idea.save
+     redirect_to ideas_path
+    else
+      render :new
+    end
   end
 
   def index
