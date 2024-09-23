@@ -1,24 +1,34 @@
-<h1>投稿一覧</h1>
+<h1 class="d-flex justify-content-center">投稿一覧</h1>
 
-<% @ideas.each do |idea| %>
-<div>
-  <p>テーマ</p>
-  <span>
-    <%=link_to idea.title, idea_path(idea.id) %>
-  </span>
 
-  <p>説明</p>
-  　<span>
-    <%=link_to idea.body, idea_path(idea.id) %>
-  </span>
-
-  <p>画像</p>
-  <%= image_tag idea.user.get_profile_image(100,100) %>
-
-  <%= link_to idea_path(idea.id) do %>
-    <%= image_tag idea.get_image %>
-  <% end %>
-
-  <p><%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></p>
-  </div>
-<% end %>
+<table class="table d-flex justify-content-center">
+  <thead>
+    <tr>
+      <td>テーマ</td>
+      <td>説明</td>
+      <td>画像</td>
+      <td>コメント</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ideas.each do |idea| %>
+    <tr>
+     <td>
+      <%=link_to idea.title, idea_path(idea.id) %>
+     </td>
+  　 <td>
+      <%=link_to idea.body, idea_path(idea.id) %>
+     </td>
+     <td>
+      <%= image_tag idea.user.get_profile_image(100,100) %>
+       <%= link_to idea_path(idea.id) do %>
+        <%= image_tag idea.get_image %>
+       <% end %>
+     </td>
+     <td>
+       <%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %>
+     </td>
+    </tr>
+   <% end %>
+  </tbody>
+</table>

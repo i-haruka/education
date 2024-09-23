@@ -1,6 +1,6 @@
-<div>
+<div class="d-flex justify-content-center">
   <h3><%= @user.name %></h3>
-  <h3><%= @user.body %></h3>
+  <h5><%= @user.body %></h5>
   <%= image_tag @user.get_profile_image(100,100) %>
   <% if @user == current_user %>
   <%= link_to "プロフィール編集", edit_user_path(@user) %>
@@ -9,15 +9,29 @@
 
 <!-- ユーザーの投稿一覧 -->
 
-<% @ideas.each do |idea| %>
-<div>
-  <p>投稿ユーザー画像：<%= image_tag idea.user.get_profile_image(100,100) %></p>
-  <p>テーマ：<%= idea.title %></p>
-  <p>説明：<%= idea.body %></p>
-  <%= link_to idea_path(idea.id) do %>
-    <%= image_tag idea.get_image %>
-  <% end %>
-  <p>ユーザーネーム：<%= idea.user.name %></p>
-  <p><%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></p>
-</div>
-<% end %>
+
+<table class="table d-flex justify-content-center">
+
+  <thead>
+    <tr>
+      <th>テーマ</th>
+      <th>説明</th>
+      <th>    </th>
+      <th>    </th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @ideas.each do |idea| %>
+    <tr>
+     <td><%= idea.title %></td>
+     <td><%= idea.body %></td>
+     <td>
+       <%= link_to idea_path(idea.id) do %>
+        <%= image_tag idea.get_image %>
+       <% end %>
+     </td>
+     <td><%= link_to "#{idea.idea_comments.count} コメント", idea_path(idea.id) %></td>
+    </tr>
+   <% end %>
+  </tbody>
+</table>

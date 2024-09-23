@@ -1,5 +1,6 @@
-<h1>編集画面</h1>
+<h1 class="d-flex justify-content-center">編集画面</h1>
 
+<div class="d-flex justify-content-center">
 <%= form_with model: @idea, url: update_idea_path(@idea.id), method: :patch do |f| %>
 
   <h4>タイトル</h4>
@@ -11,3 +12,4 @@
   <%= f.submit '保存' %>
 
 <% end %>
+</div>

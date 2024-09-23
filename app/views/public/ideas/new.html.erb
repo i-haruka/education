@@ -1,3 +1,4 @@
+<div class="d-flex justify-content-center">
 <h1>投稿フォーム</h1>
 
 <% if @idea.errors.any? %>
@@ -20,3 +21,4 @@
   <%= f.file_field :image, accept: "image/*" %>
   <%= f.submit '投稿' %>
 <% end %>
+</div>

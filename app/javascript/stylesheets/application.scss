@@ -1,6 +1,12 @@
 @use '~bootstrap/scss/bootstrap';
 
-body {
-  background-image: image-url("hoge.jpg");
-    
+.navbar .nav-item a,
+.navbar .navbar-brand
+{
+   color: white !important;
+}
+
+.navbar .nav-item a:hover
+{
+   color: rgba(255, 255, 255, 0.8) !important;
 }
