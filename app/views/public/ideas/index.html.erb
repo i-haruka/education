@@ -4,15 +4,19 @@
 <table class="table d-flex justify-content-center">
   <thead>
     <tr>
-      <td>テーマ</td>
-      <td>説明</td>
-      <td>画像</td>
-      <td>コメント</td>
+      <th>投稿者</th>
+      <th>テーマ</th>
+      <th>説明</th>
+      <th>　　</th>
+      <th>コメント</th>
     </tr>
   </thead>
   <tbody>
     <% @ideas.each do |idea| %>
     <tr>
+     <td>
+     <%= image_tag idea.user.get_profile_image(100,100) %>
+     </td>
      <td>
       <%=link_to idea.title, idea_path(idea.id) %>
      </td>
@@ -20,7 +24,6 @@
       <%=link_to idea.body, idea_path(idea.id) %>
      </td>
      <td>
-      <%= image_tag idea.user.get_profile_image(100,100) %>
        <%= link_to idea_path(idea.id) do %>
         <%= image_tag idea.get_image %>
        <% end %>

@@ -2,22 +2,24 @@
   <h3><%= @user.name %></h3>
   <h5><%= @user.body %></h5>
   <%= image_tag @user.get_profile_image(100,100) %>
-  <% if @user == current_user %>
-  <%= link_to "プロフィール編集", edit_user_path(@user) %>
-  <% end %>
+  <button type="button" class="btn btn-outline-info">
+   <% if @user == current_user %>
+   <%= link_to "プロフィール編集", edit_user_path(@user) %>
+   <% end %>
+  </button>
 </div>
 
 <!-- ユーザーの投稿一覧 -->
 
-
+<h3 class="d-flex justify-content-center">投稿一覧</h3>
 <table class="table d-flex justify-content-center">
 
   <thead>
     <tr>
-      <th>テーマ</th>
-      <th>説明</th>
-      <th>    </th>
-      <th>    </th>
+      <th scope="col">テーマ</th>
+      <th scope="col">説明</th>
+      <th scope="col">    </th>
+      <th scope="col">    </th>
     </tr>
   </thead>
   <tbody>

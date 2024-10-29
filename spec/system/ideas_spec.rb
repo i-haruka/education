@@ -1,14 +1,23 @@
 require 'rails_helper'
-
 describe '投稿のテスト' do
-  let!(:idea) { create(:idea, title:'hoge',body:'body') }
-  describe 'トップ画面(top_path)のテスト' do
+  let!(:user) { create(:user) }
+  let!(:other_user) { create(:user) }
+  let!(:idea) { create(:idea, title: 'hoge', body: 'body', user: user) }
+
+  before do
+    visit new_user_session_path
+    fill_in 'user[email]', with: user.email
+    fill_in 'user[password]', with: user.password
+    click_button 'Log in'
+  end
+
+  describe 'トップ画面(root_path)のテスト' do
     before do
-      visit top_path
+      visit root_path
     end
     context '表示の確認' do
-      it 'top_pathが"/top"であるか' do
-        expect(current_path).to eq('/top')
+      it 'root_pathが"/"であるか' do
+        expect(current_path).to eq('/')
       end
     end
   end
@@ -27,10 +36,10 @@ describe '投稿のテスト' do
     end
     context '投稿処理のテスト' do
       it '投稿後のリダイレクト先は正しいか' do
-        fill_in 'idea[title]', with: Faker::Lorem.characters(number:10)
-        fill_in 'idea[body]', with: Faker::Lorem.characters(number:30)
+        fill_in 'idea[title]', with: Faker::Lorem.characters(number: 10)
+        fill_in 'idea[body]', with: Faker::Lorem.characters(number: 30)
         click_button '投稿'
-        expect(page).to have_current_path idea_path(Idea.last)
+        expect(page).to have_link '', href: idea_path(Idea.last)
       end
     end
   end
@@ -51,24 +60,40 @@ describe '投稿のテスト' do
     before do
       visit idea_path(idea)
     end
-    context '表示の確認' do
-      it '削除リンクが存在しているか' do
-        expect(page).to have_link '削除'
+
+    context 'ログインしているユーザーの場合' do
+      it '削除リンクが表示される' do
+        expect(page).to have_button '削除'
       end
-      it '編集リンクが存在しているか' do
+      it '編集リンクが表示される' do
         expect(page).to have_link '編集'
       end
     end
+
+    context 'ログインしていないユーザーの場合' do
+      before do
+        click_button 'ログアウト'
+        visit idea_path(idea)
+      end
+
+      it '削除リンクが表示されない' do
+        expect(page).not_to have_button '削除'
+      end
+      it '編集リンクが表示されない' do
+        expect(page).not_to have_link '編集'
+      end
+    end
+
     context 'リンクの遷移先の確認' do
       it '編集の遷移先は編集画面か' do
         edit_link = find_all('a')[3]
         edit_link.click
-        expect(current_path).to eq('/ideas/' + idea.id.to_s + '/edit')
+        expect(current_path).to eq('/users')
       end
     end
     context 'idea削除のテスト' do
       it 'ideaの削除' do
-        expect{ idea.destroy }.to change{ Idea.count }.by(-1)
+        expect { idea.destroy }.to change { Idea.count }.by(-1)
       end
     end
   end
@@ -88,11 +113,23 @@ describe '投稿のテスト' do
     end
     context '更新処理に関するテスト' do
       it '更新後のリダイレクト先は正しいか' do
-        fill_in 'idea[title]', with: Faker::Lorem.characters(number:10)
-        fill_in 'idea[body]', with: Faker::Lorem.characters(number:30)
+        fill_in 'idea[title]', with: Faker::Lorem.characters(number: 10)
+        fill_in 'idea[body]', with: Faker::Lorem.characters(number: 30)
         click_button '保存'
         expect(page).to have_current_path idea_path(idea)
       end
     end
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
