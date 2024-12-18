@@ -14,7 +14,7 @@ class Public::IdeasController < ApplicationController
   end
 
   def index
-    @ideas = Idea.page(params[:page])
+    @ideas = Idea.page(params[:page]).per(9).order(created_at: :desc)
   end
 
   def show
